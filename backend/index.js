@@ -14,9 +14,10 @@ const db = require("knex")({
 
 db.schema.createTableIfNotExists("todos", (table) => {
   table.bigIncrements("id").primary();
-  table.text("content").notNullable();
+  table.text("name").notNullable();
+  table.text("description").notNullable();
   table.boolean("done").notNullable().defaultTo(false);
-}).then()
+}).then();
 
 const cors = require("cors");
 const app = express();
