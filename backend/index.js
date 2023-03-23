@@ -12,6 +12,12 @@ const db = require("knex")({
   },
 });
 
+db.schema.createTableIfNotExists("todos", (table) => {
+  table.bigIncrements("id").primary();
+  table.text("content").notNullable();
+  table.boolean("done").notNullable().defaultTo(false);
+}).then()
+
 const cors = require("cors");
 const app = express();
 
@@ -20,16 +26,21 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/todos", async (req, res) => {
-  //TO_MODIFY
-  res.send([]) // to remove after question 1)
+  db.select("*").from("todos").then((data) => {
+    res.json(data);
+  });
 });
 
 app.post("/todos", async (req, res) => {
-  //TO_MODIFY
+  db.insert(req.body).into("todos").then(() => {
+    res.status(200).send(true);
+  })
 });
 
 app.delete("/todos/:todoId", async (req, res) => {
-  //TO_MODIFY
+  db.where("id", req.params.todoId).del().from("todos").then(() => {
+    res.send("Deleted");
+  })
 });
 
 app.listen(port, () => {

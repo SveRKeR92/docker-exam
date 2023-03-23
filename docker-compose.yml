@@ -4,3 +4,29 @@ services:
     build: './backend'
     ports:
       - '4001:4001'
+    networks:
+      - exam-network
+    depends_on:
+      - mysql
+    volumes:
+      - './backend/:/app/src'
+
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_USER=todolist
+      - MYSQL_PASSWORD=todolist
+      - MYSQL_DATABASE=todolist
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+    networks:
+      - exam-network
+    volumes:
+      - 'db-data:/var/lib/mysql'
+
+
+networks:
+  exam-network:
+
+
+volumes:
+  db-data:
