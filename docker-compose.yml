@@ -2,6 +2,7 @@ version: '3.7'
 services:
   backend:
     build: './backend'
+    env_file: "./.env"
     ports:
       - '4001:4001'
     networks:
@@ -13,11 +14,7 @@ services:
 
   mysql:
     image: mysql
-    environment:
-      - MYSQL_USER=todolist
-      - MYSQL_PASSWORD=todolist
-      - MYSQL_DATABASE=todolist
-      - MYSQL_RANDOM_ROOT_PASSWORD=true
+    env_file: './.env'
     networks:
       - exam-network
     volumes:
