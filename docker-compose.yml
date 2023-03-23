@@ -23,6 +23,13 @@ services:
     volumes:
       - 'db-data:/var/lib/mysql'
 
+  frontend:
+    build: './frontend'
+    ports:
+      - '4000:3000'
+    networks:
+      - exam-network
+
 
 networks:
   exam-network:
